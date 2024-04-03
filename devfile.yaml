@@ -1,9 +1,6 @@
 schemaVersion: 2.2.0
 metadata:
-  name: ansible-devspaces-poc
-variables:
-  repoUrl: 'git@evdcigl-ssh.corp.fin:enterprise-engineering/ansible/collections/diagnostics.git'
-  repoPath: "/projects/ansible-devspaces-poc/collections/ansible_collections/diagnostics"
+  name: omf-parent
 components:
   - name: tooling-container
     container:
