@@ -99,8 +99,3 @@ commands:
         ansible-navigator --ee false
       workingDir: ${PROJECTS_ROOT}/ansible-devspaces-poc
       component: tooling-container
-events:
-  postStart:
-    - "oc-install"
-    # - "modify-github-ext"
-    - "clone-collection"
