@@ -19,6 +19,14 @@ projects:
       remotes:
         origin: "https://github.com/ahill-omf/ansible-devspaces-poc.git"
 commands:
+  - id: oc-install
+    exec:
+      commandLine: "/usr/local/bin/ansible-playbook ${PROJECT_SOURCE}/playbooks/install_oc.yml"
+      workingDir: ${PROJECT_SOURCE}
+      group:
+        kind: build
+        isDefault: true
+      component: tooling-container
   - id: molecule-create
     exec:
       label: "1.Molecule: start a test pod for the automation"
