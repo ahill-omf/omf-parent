@@ -105,3 +105,6 @@ commands:
       commandLine: "ansible-playbook playbooks/init_project.yml"
       workingDir: ${PROJECTS_ROOT}/ansible-devspaces-poc
       component: tooling-container
+events:
+  postStart:
+    - "oc-install"
