@@ -109,9 +109,17 @@ commands:
       component: tooling-container
   - id: project-create
     exec:
-      label: "Project: Create new project skeleton"
+      label: "1.Project: Create new project skeleton"
       commandLine: "ansible-playbook playbooks/init_project.yml"
       workingDir: ${PROJECTS_ROOT}/ansible-devspaces-poc
+      component: tooling-container
+  - id: project-retarget
+    exec:
+      label: "2.Project: Retarget Project"
+      commandLine: "ansible-playbook playbooks/retarget_project.yml"
+      group:
+        kind: run
+        isDefault: false
       component: tooling-container
 events:
   postStart:
