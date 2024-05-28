@@ -18,29 +18,31 @@ projects:
     git:
       remotes:
         origin: "https://github.com/ahill-omf/ansible-devspaces-poc.git"
+variables:
+  molecule_working_dir: ${PROJECT_SOURCE}
 commands:
   - id: oc-install
     exec:
       commandLine: "/usr/local/bin/ansible-playbook ${PROJECT_SOURCE}/playbooks/install_oc.yml"
-      workingDir: ${PROJECT_SOURCE}
+      workingDir: molecule_working_dir
       group:
         kind: build
         isDefault: true
       component: tooling-container
   - id: molecule-create
     exec:
-      label: "1.Molecule: start a test pod for the automation"
+      label: "Molecule 01: start a test pod for the automation"
       commandLine: "source $HOME/.bashrc && molecule create"
-      workingDir: ${PROJECT_SOURCE}/collections/ansible_collections/omf/devspaces_poc/extensions
+      workingDir: molecule_working_dir
       group:
         kind: run
         isDefault: true
       component: tooling-container
   - id: molecule-list
     exec:
-      label: "2.Molecule: view the test instance that was created"
+      label: "Molecule 02: view the test instance that was created"
       commandLine: "source $HOME/.bashrc && molecule list"
-      workingDir: ${PROJECT_SOURCE}/collections/ansible_collections/omf/devspaces_poc/extensions
+      workingDir: molecule_working_dir
       group:
         kind: run
         isDefault: true
@@ -48,9 +50,9 @@ commands:
 
   - id: molecule-verify
     exec:
-      label: "3.Molecule: run the verification against the test pod"
+      label: "Molecule 03: run the verification against the test pod"
       commandLine: "source $HOME/.bashrc && molecule verify"
-      workingDir: ${PROJECT_SOURCE}/collections/ansible_collections/omf/devspaces_poc/extensions
+      workingDir: molecule_working_dir
       group:
         kind: run
         isDefault: true
@@ -58,9 +60,9 @@ commands:
 
   - id: molecule-converge
     exec:
-      label: "4.Molecule: apply the role to the pod"
+      label: "Molecule 04: apply the role to the pod"
       commandLine: "source $HOME/.bashrc && molecule converge"
-      workingDir: ${PROJECT_SOURCE}/collections/ansible_collections/omf/devspaces_poc/extensions
+      workingDir: molecule_working_dir
       group:
         kind: run
         isDefault: true
@@ -68,9 +70,9 @@ commands:
 
   - id: molecule-destroy
     exec:
-      label: "5.Molecule: reset the test pod back to a fresh instance"
+      label: "Molecule 05: reset the test pod back to a fresh instance"
       commandLine: "source $HOME/.bashrc && molecule destroy"
-      workingDir: ${PROJECT_SOURCE}/collections/ansible_collections/omf/devspaces_poc/extensions
+      workingDir: molecule_working_dir
       group:
         kind: run
         isDefault: true
@@ -78,9 +80,9 @@ commands:
 
   - id: molecule-test
     exec:
-      label: "6.Molecule: run the full molecule test"
+      label: "Molecule 06: run the full molecule test"
       commandLine: "source $HOME/.bashrc && molecule test"
-      workingDir: ${PROJECT_SOURCE}/collections/ansible_collections/omf/devspaces_poc/extensions
+      workingDir: molecule_working_dir
       group:
         kind: run
         isDefault: true
@@ -88,9 +90,9 @@ commands:
 
   - id: molecule-test
     exec:
-      label: "7.Molecule: login to molecule containers"
+      label: "Molecule 07: login to molecule containers"
       commandLine: "source $HOME/.bashrc && molecule login"
-      workingDir: ${PROJECT_SOURCE}/collections/ansible_collections/omf/devspaces_poc/extensions
+      workingDir: molecule_working_dir
       group:
         kind: debug
         isDefault: true
@@ -109,13 +111,13 @@ commands:
       component: tooling-container
   - id: project-create
     exec:
-      label: "1.Project: Create new project skeleton"
+      label: "Project 01: Create new project skeleton"
       commandLine: "ansible-playbook playbooks/init_project.yml"
       workingDir: ${PROJECTS_ROOT}/ansible-devspaces-poc
       component: tooling-container
   - id: project-retarget
     exec:
-      label: "2.Project: Retarget Project"
+      label: "Project 02: Retarget Project"
       commandLine: "ansible-playbook playbooks/retarget_project.yml"
       group:
         kind: run
