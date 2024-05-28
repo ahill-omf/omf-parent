@@ -18,8 +18,6 @@ projects:
     git:
       remotes:
         origin: "https://github.com/ahill-omf/ansible-devspaces-poc.git"
-variables:
-  molecule_working_dir: ${PROJECT_SOURCE}
 commands:
   - id: oc-install
     exec:
