@@ -24,7 +24,7 @@ commands:
   - id: oc-install
     exec:
       commandLine: "/usr/local/bin/ansible-playbook ${PROJECT_SOURCE}/playbooks/install_oc.yml"
-      workingDir: "{{ molecule_working_dir }}"
+      workingDir: molecule_working_dir
       group:
         kind: build
         isDefault: true
@@ -33,7 +33,7 @@ commands:
     exec:
       label: "Molecule 01: start a test pod for the automation"
       commandLine: "source $HOME/.bashrc && molecule create"
-      workingDir: "{{ molecule_working_dir }}"
+      workingDir: molecule_working_dir
       group:
         kind: run
         isDefault: true
@@ -42,7 +42,7 @@ commands:
     exec:
       label: "Molecule 02: view the test instance that was created"
       commandLine: "source $HOME/.bashrc && molecule list"
-      workingDir: "{{ molecule_working_dir }}"
+      workingDir: molecule_working_dir
       group:
         kind: run
         isDefault: true
@@ -52,7 +52,7 @@ commands:
     exec:
       label: "Molecule 03: run the verification against the test pod"
       commandLine: "source $HOME/.bashrc && molecule verify"
-      workingDir: "{{ molecule_working_dir }}"
+      workingDir: molecule_working_dir
       group:
         kind: run
         isDefault: true
@@ -62,7 +62,7 @@ commands:
     exec:
       label: "Molecule 04: apply the role to the pod"
       commandLine: "source $HOME/.bashrc && molecule converge"
-      workingDir: "{{ molecule_working_dir }}"
+      workingDir: molecule_working_dir
       group:
         kind: run
         isDefault: true
@@ -72,7 +72,7 @@ commands:
     exec:
       label: "Molecule 05: reset the test pod back to a fresh instance"
       commandLine: "source $HOME/.bashrc && molecule destroy"
-      workingDir: "{{ molecule_working_dir }}"
+      workingDir: molecule_working_dir
       group:
         kind: run
         isDefault: true
@@ -82,7 +82,7 @@ commands:
     exec:
       label: "Molecule 06: run the full molecule test"
       commandLine: "source $HOME/.bashrc && molecule test"
-      workingDir: "{{ molecule_working_dir }}"
+      workingDir: molecule_working_dir
       group:
         kind: run
         isDefault: true
@@ -92,7 +92,7 @@ commands:
     exec:
       label: "Molecule 07: login to molecule containers"
       commandLine: "source $HOME/.bashrc && molecule login"
-      workingDir: "{{ molecule_working_dir }}"
+      workingDir: molecule_working_dir
       group:
         kind: debug
         isDefault: true
