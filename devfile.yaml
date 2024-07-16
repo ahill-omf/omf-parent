@@ -26,7 +26,7 @@ variables:
 commands:
   - id: oc-install
     exec:
-      commandLine: /usr/local/bin/ansible-playbook {{primary_source}}/playbooks/install_oc.yml
+      commandLine: "/usr/local/bin/ansible-playbook {{primary_source}}/playbooks/install_oc.yml"
       workingDir: "{{primary_source}}"
       group:
         kind: build
@@ -35,7 +35,7 @@ commands:
   - id: workspace-configure
     exec:
       label: "Configure workspace for tasks"
-      commandLine: /usr/local/bin/ansible-playbook {{primary_source}}/playbooks/configure_workspace.yml
+      commandLine: "/usr/local/bin/ansible-playbook {{primary_source}}/playbooks/configure_workspace.yml"
       workingDir: "{{primary_source}}"
       group:
         kind: build
