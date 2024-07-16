@@ -21,7 +21,8 @@ projects:
 variables:
   # ENV Variable for the core repository. This shouldn't be changed.
   project_source: ${PROJECT_SOURCE}
-  # ENV Variable for the core repository. This shouldn't be changed.
+  # ENV Variable for a secondary repository. This is transient and can be changed by the user. For instance, this needs
+  # updating to correctly target molecule invocations
   secondary_source: ${SECONDARY_SOURCE}
   molecule_working_dir: ${SECONDARY_SOURCE}/extensions
   molecule_scenario: ${MOLECULE_SCENARIO}
@@ -34,6 +35,7 @@ commands:
         kind: build
         isDefault: true
       component: tooling-container
+
   - id: workspace-configure
     exec:
       label: "Configure workspace for tasks"
@@ -43,6 +45,7 @@ commands:
         kind: build
         isDefault: false
       component: tooling-container
+
   - id: molecule-create
     exec:
       label: "Molecule 01: start a test pod for the automation"
@@ -123,14 +126,16 @@ commands:
         ansible-navigator --ee false
       workingDir: "{{ project_source }}"
       component: tooling-container
+
   - id: project-summary
     exec:
       label: "Project 01: View Project Variables"
-      commandLine: "ansible-playbook {{ project_source }}playbooks/view_project.yml"
+      commandLine: "ansible-playbook {{ project_source }}/playbooks/view_project.yml"
       group:
         kind: run
         isDefault: false
       component: tooling-container
+
   - id: project-retarget
     exec:
       label: "Project 02: Retarget Project"
