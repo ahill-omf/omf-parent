@@ -139,5 +139,5 @@ commands:
       component: tooling-container
 events:
   postStart:
-    - "oc-install"
     - "workspace-configure"
+    - "oc-install"
