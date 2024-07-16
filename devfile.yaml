@@ -26,8 +26,8 @@ variables:
 commands:
   - id: oc-install
     exec:
-      commandLine: "/usr/local/bin/ansible-playbook {{primary_source}}/playbooks/install_oc.yml"
-      workingDir: "{{primary_source}}"
+      commandLine: "/usr/local/bin/ansible-playbook ${PROJECT_SOURCE}/playbooks/install_oc.yml"
+      workingDir: ${PROJECT_SOURCE}
       group:
         kind: build
         isDefault: true
@@ -139,5 +139,5 @@ commands:
       component: tooling-container
 events:
   postStart:
-    - "workspace-configure"
+    # - "workspace-configure"
     - "oc-install"
