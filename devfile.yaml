@@ -19,6 +19,7 @@ projects:
       remotes:
         origin: "https://github.com/ahill-omf/ansible-devspaces-poc.git"
 variables:
+  project_source: ${PROJECT_SOURCE}
   # ENV Variable for the core existing repository. This shouldn't be changed after the postStart init command
   primary_source: ${PRIMARY_SOURCE}
   molecule_working_dir: ${PROJECT_SOURCE}/extensions
@@ -26,8 +27,8 @@ variables:
 commands:
   - id: oc-install
     exec:
-      commandLine: "/usr/local/bin/ansible-playbook ${PROJECT_SOURCE}/playbooks/install_oc.yml"
-      workingDir: ${PROJECT_SOURCE}
+      commandLine: "/usr/local/bin/ansible-playbook {{ project_source }}/playbooks/install_oc.yml"
+      workingDir: "{{ project_source }}"
       group:
         kind: build
         isDefault: true
