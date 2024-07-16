@@ -19,12 +19,24 @@ projects:
       remotes:
         origin: "https://github.com/ahill-omf/ansible-devspaces-poc.git"
 variables:
-  molecule_working_dir: ${PROJECT_SOURCE}
+  # ENV Variable for the core existing repository. This shouldn't be changed after the postStart init command
+  primary_source: ${PRIMARY_SOURCE}
+  molecule_working_dir: ${PROJECT_SOURCE}/extensions
+  molecule_scenario: ${MOLECULE_SCENARIO}
 commands:
   - id: oc-install
     exec:
-      commandLine: "/usr/local/bin/ansible-playbook ${PROJECT_SOURCE}/playbooks/install_oc.yml"
-      workingDir: "{{ molecule_working_dir }}"
+      commandLine: "/usr/local/bin/ansible-playbook {{ primary_source }}/playbooks/install_oc.yml"
+      workingDir: "{{ primary_source }}"
+      group:
+        kind: build
+        isDefault: true
+      component: tooling-container
+  - id: workspace-configure
+    exec:
+      label: "Configure workspace for tasks"
+      commandLine: "/usr/local/bin/ansible-playbook {{ primary_source }}/playbooks/configure_workspace.yml"
+      workingDir: "{{ primary_source }}"
       group:
         kind: build
         isDefault: true
@@ -32,16 +44,17 @@ commands:
   - id: molecule-create
     exec:
       label: "Molecule 01: start a test pod for the automation"
-      commandLine: "source $HOME/.bashrc && molecule create"
+      commandLine: "source $HOME/.bashrc && molecule create -s {{ molecule_scenario }}"
       workingDir: "{{ molecule_working_dir }}"
       group:
         kind: run
         isDefault: true
       component: tooling-container
+
   - id: molecule-list
     exec:
       label: "Molecule 02: view the test instance that was created"
-      commandLine: "source $HOME/.bashrc && molecule list"
+      commandLine: "source $HOME/.bashrc && molecule list -s {{ molecule_scenario }}"
       workingDir: "{{ molecule_working_dir }}"
       group:
         kind: run
@@ -51,7 +64,7 @@ commands:
   - id: molecule-verify
     exec:
       label: "Molecule 03: run the verification against the test pod"
-      commandLine: "source $HOME/.bashrc && molecule verify"
+      commandLine: "source $HOME/.bashrc && molecule verify -s {{ molecule_scenario }}"
       workingDir: "{{ molecule_working_dir }}"
       group:
         kind: run
@@ -61,7 +74,7 @@ commands:
   - id: molecule-converge
     exec:
       label: "Molecule 04: apply the role to the pod"
-      commandLine: "source $HOME/.bashrc && molecule converge"
+      commandLine: "source $HOME/.bashrc && molecule converge -s {{ molecule_scenario }}"
       workingDir: "{{ molecule_working_dir }}"
       group:
         kind: run
@@ -70,8 +83,7 @@ commands:
 
   - id: molecule-destroy
     exec:
-      label: "Molecule 05: reset the test pod back to a fresh instance"
-      commandLine: "source $HOME/.bashrc && molecule destroy"
+      commandLine: "source $HOME/.bashrc && molecule destroy -s {{ molecule_scenario }}"
       workingDir: "{{ molecule_working_dir }}"
       group:
         kind: run
@@ -81,17 +93,17 @@ commands:
   - id: molecule-test
     exec:
       label: "Molecule 06: run the full molecule test"
-      commandLine: "source $HOME/.bashrc && molecule test"
+      commandLine: "source $HOME/.bashrc && molecule test -s {{ molecule_scenario }}"
       workingDir: "{{ molecule_working_dir }}"
       group:
         kind: run
         isDefault: true
       component: tooling-container
 
-  - id: molecule-test
+  - id: molecule-login
     exec:
       label: "Molecule 07: login to molecule containers"
-      commandLine: "source $HOME/.bashrc && molecule login"
+      commandLine: "source $HOME/.bashrc && molecule login -s {{ molecule_scenario }}"
       workingDir: "{{ molecule_working_dir }}"
       group:
         kind: debug
@@ -107,18 +119,20 @@ commands:
         fi
         cp /usr/local/lib/python3.11/site-packages/ansible_navigator/data/catalog_collections.py $HOME/.cache/ansible-navigator
         ansible-navigator --ee false
-      workingDir: ${PROJECTS_ROOT}/ansible-devspaces-poc
+      workingDir: "{{ primary_source }}"
       component: tooling-container
-  - id: project-create
+  - id: project-summary
     exec:
-      label: "Project 01: Create new project skeleton"
-      commandLine: "ansible-playbook playbooks/init_project.yml"
-      workingDir: ${PROJECTS_ROOT}/ansible-devspaces-poc
+      label: "Project 01: View Project Variables"
+      commandLine: "ansible-playbook {{ primary_source }}playbooks/view_project.yml"
+      group:
+        kind: run
+        isDefault: false
       component: tooling-container
   - id: project-retarget
     exec:
       label: "Project 02: Retarget Project"
-      commandLine: "ansible-playbook playbooks/retarget_project.yml"
+      commandLine: "ansible-playbook {{ primary_source }}/playbooks/retarget_project.yml"
       group:
         kind: run
         isDefault: false
@@ -126,3 +140,4 @@ commands:
 events:
   postStart:
     - "oc-install"
+    - "workspace-configure"
