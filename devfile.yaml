@@ -19,10 +19,11 @@ projects:
       remotes:
         origin: "https://github.com/ahill-omf/ansible-devspaces-poc.git"
 variables:
+  # ENV Variable for the core repository. This shouldn't be changed.
   project_source: ${PROJECT_SOURCE}
-  # ENV Variable for the core existing repository. This shouldn't be changed after the postStart init command
-  primary_source: ${PRIMARY_SOURCE}
-  molecule_working_dir: ${PROJECT_SOURCE}/extensions
+  # ENV Variable for the core repository. This shouldn't be changed.
+  secondary_source: ${SECONDARY_SOURCE}
+  molecule_working_dir: ${SECONDARY_SOURCE}/extensions
   molecule_scenario: ${MOLECULE_SCENARIO}
 commands:
   - id: oc-install
@@ -36,8 +37,8 @@ commands:
   - id: workspace-configure
     exec:
       label: "Configure workspace for tasks"
-      commandLine: "/usr/local/bin/ansible-playbook {{primary_source}}/playbooks/configure_workspace.yml"
-      workingDir: "{{primary_source}}"
+      commandLine: "/usr/local/bin/ansible-playbook {{ project_source }}/playbooks/configure_workspace.yml"
+      workingDir: "{{ project_source }}"
       group:
         kind: build
         isDefault: false
@@ -120,12 +121,12 @@ commands:
         fi
         cp /usr/local/lib/python3.11/site-packages/ansible_navigator/data/catalog_collections.py $HOME/.cache/ansible-navigator
         ansible-navigator --ee false
-      workingDir: "{{ primary_source }}"
+      workingDir: "{{ project_source }}"
       component: tooling-container
   - id: project-summary
     exec:
       label: "Project 01: View Project Variables"
-      commandLine: "ansible-playbook {{ primary_source }}playbooks/view_project.yml"
+      commandLine: "ansible-playbook {{ project_source }}playbooks/view_project.yml"
       group:
         kind: run
         isDefault: false
@@ -133,12 +134,12 @@ commands:
   - id: project-retarget
     exec:
       label: "Project 02: Retarget Project"
-      commandLine: "ansible-playbook {{ primary_source }}/playbooks/retarget_project.yml"
+      commandLine: "ansible-playbook {{ project_source }}/playbooks/retarget_project.yml"
       group:
         kind: run
         isDefault: false
       component: tooling-container
 events:
   postStart:
-    # - "workspace-configure"
+    - "workspace-configure"
     - "oc-install"
