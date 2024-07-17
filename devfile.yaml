@@ -50,7 +50,7 @@ commands:
     exec:
       label: "Molecule 01: start a test pod for the automation"
       commandLine: "source $HOME/.bashrc && molecule create -s $MOLECULE_SCENARIO"
-      workingDir: "{{ molecule_working_dir}}"
+      workingDir: "$SECONDARY_SOURCE/extensions"
       group:
         kind: run
         isDefault: true
