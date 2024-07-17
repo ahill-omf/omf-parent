@@ -50,7 +50,7 @@ commands:
     exec:
       label: "Molecule 01: start a test pod for the automation"
       commandLine: "source $HOME/.bashrc && molecule create -s $MOLECULE_SCENARIO"
-      workingDir: "$SECONDARY_SOURCE/extensions"
+      workingDir: "${PROJECT_SOURCE}/extensions"
       group:
         kind: run
         isDefault: true
@@ -60,7 +60,7 @@ commands:
     exec:
       label: "Molecule 02: view the test instance that was created"
       commandLine: "source $HOME/.bashrc && molecule list -s $MOLECULE_SCENARIO"
-      workingDir: "$SECONDARY_SOURCE/extensions"
+      workingDir: "${PROJECT_SOURCE}/extensions"
       group:
         kind: run
         isDefault: true
@@ -70,7 +70,7 @@ commands:
     exec:
       label: "Molecule 03: run the verification against the test pod"
       commandLine: "source $HOME/.bashrc && molecule verify -s $MOLECULE_SCENARIO"
-      workingDir: "$SECONDARY_SOURCE/extensions"
+      workingDir: "${PROJECT_SOURCE}/extensions"
       group:
         kind: run
         isDefault: true
@@ -80,7 +80,7 @@ commands:
     exec:
       label: "Molecule 04: apply the role to the pod"
       commandLine: "source $HOME/.bashrc && molecule converge -s $MOLECULE_SCENARIO"
-      workingDir: "$SECONDARY_SOURCE/extensions"
+      workingDir: "${PROJECT_SOURCE}/extensions"
       group:
         kind: run
         isDefault: true
@@ -89,7 +89,7 @@ commands:
   - id: molecule-destroy
     exec:
       commandLine: "source $HOME/.bashrc && molecule destroy -s $MOLECULE_SCENARIO"
-      workingDir: "$SECONDARY_SOURCE/extensions"
+      workingDir: "${PROJECT_SOURCE}/extensions"
       group:
         kind: run
         isDefault: true
@@ -99,7 +99,7 @@ commands:
     exec:
       label: "Molecule 06: run the full molecule test"
       commandLine: "source $HOME/.bashrc && molecule test -s $MOLECULE_SCENARIO"
-      workingDir: "$SECONDARY_SOURCE/extensions"
+      workingDir: "${PROJECT_SOURCE}/extensions"
       group:
         kind: run
         isDefault: true
@@ -109,7 +109,7 @@ commands:
     exec:
       label: "Molecule 07: login to molecule containers"
       commandLine: "source $HOME/.bashrc && molecule login -s $MOLECULE_SCENARIO"
-      workingDir: "$SECONDARY_SOURCE/extensions"
+      workingDir: "${PROJECT_SOURCE}/extensions"
       group:
         kind: debug
         isDefault: true
