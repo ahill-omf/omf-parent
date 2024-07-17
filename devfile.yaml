@@ -144,6 +144,15 @@ commands:
         kind: run
         isDefault: false
       component: tooling-container
+
+  - id: print-devfile-vars
+    exec:
+      label: "Devfile 01: Print Devfile Vars"
+      commandLine: "echo {{ project_source }}; echo $PROJECT_SOURCE; echo ${PROJECT_SOURCE}"
+      group:
+        kind: run
+        isDefault: false
+      component: tooling-container
 events:
   postStart:
     - "workspace-configure"
