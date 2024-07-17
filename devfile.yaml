@@ -13,11 +13,6 @@ components:
       env:
         - name: "ANSIBLE_COLLECTIONS_PATH"
           value: "~/.ansible/collections:/usr/share/ansible/collections:/projects/ansible-devspaces-poc/collections"
-projects:
-  - name: ansible-devspaces-poc
-    git:
-      remotes:
-        origin: "https://github.com/ahill-omf/ansible-devspaces-poc.git"
 variables:
   # ENV Variable for the core repository. This shouldn't be changed.
   project_source: $PROJECT_SOURCE
