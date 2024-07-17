@@ -148,7 +148,7 @@ commands:
   - id: print-devfile-vars
     exec:
       label: "Devfile 01: Print Devfile Vars"
-      commandLine: "echo {{ project_source }}; echo $PROJECT_SOURCE; echo ${PROJECT_SOURCE}"
+      commandLine: "source $HOME/.bashrc; echo {{ project_source }}; echo $PROJECT_SOURCE; echo ${PROJECT_SOURCE}"
       group:
         kind: run
         isDefault: false
