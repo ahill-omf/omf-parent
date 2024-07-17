@@ -49,8 +49,8 @@ commands:
   - id: molecule-create
     exec:
       label: "Molecule 01: start a test pod for the automation"
-      commandLine: "source $HOME/.bashrc && molecule create -s {{ molecule_scenario }}"
-      workingDir: "{{ molecule_working_dir }}"
+      commandLine: "source $HOME/.bashrc && molecule create -s $MOLECULE_SCENARIO"
+      workingDir: "$SECONDARY_SOURCE/extensions"
       group:
         kind: run
         isDefault: true
@@ -59,8 +59,8 @@ commands:
   - id: molecule-list
     exec:
       label: "Molecule 02: view the test instance that was created"
-      commandLine: "source $HOME/.bashrc && molecule list -s {{ molecule_scenario }}"
-      workingDir: "{{ molecule_working_dir }}"
+      commandLine: "source $HOME/.bashrc && molecule list -s $MOLECULE_SCENARIO"
+      workingDir: "$SECONDARY_SOURCE/extensions"
       group:
         kind: run
         isDefault: true
@@ -69,8 +69,8 @@ commands:
   - id: molecule-verify
     exec:
       label: "Molecule 03: run the verification against the test pod"
-      commandLine: "source $HOME/.bashrc && molecule verify -s {{ molecule_scenario }}"
-      workingDir: "{{ molecule_working_dir }}"
+      commandLine: "source $HOME/.bashrc && molecule verify -s $MOLECULE_SCENARIO"
+      workingDir: "$SECONDARY_SOURCE/extensions"
       group:
         kind: run
         isDefault: true
@@ -79,8 +79,8 @@ commands:
   - id: molecule-converge
     exec:
       label: "Molecule 04: apply the role to the pod"
-      commandLine: "source $HOME/.bashrc && molecule converge -s {{ molecule_scenario }}"
-      workingDir: "{{ molecule_working_dir }}"
+      commandLine: "source $HOME/.bashrc && molecule converge -s $MOLECULE_SCENARIO"
+      workingDir: "$SECONDARY_SOURCE/extensions"
       group:
         kind: run
         isDefault: true
@@ -88,8 +88,8 @@ commands:
 
   - id: molecule-destroy
     exec:
-      commandLine: "source $HOME/.bashrc && molecule destroy -s {{ molecule_scenario }}"
-      workingDir: "{{ molecule_working_dir }}"
+      commandLine: "source $HOME/.bashrc && molecule destroy -s $MOLECULE_SCENARIO"
+      workingDir: "$SECONDARY_SOURCE/extensions"
       group:
         kind: run
         isDefault: true
@@ -98,8 +98,8 @@ commands:
   - id: molecule-test
     exec:
       label: "Molecule 06: run the full molecule test"
-      commandLine: "source $HOME/.bashrc && molecule test -s {{ molecule_scenario }}"
-      workingDir: "{{ molecule_working_dir }}"
+      commandLine: "source $HOME/.bashrc && molecule test -s $MOLECULE_SCENARIO"
+      workingDir: "$SECONDARY_SOURCE/extensions"
       group:
         kind: run
         isDefault: true
@@ -108,8 +108,8 @@ commands:
   - id: molecule-login
     exec:
       label: "Molecule 07: login to molecule containers"
-      commandLine: "source $HOME/.bashrc && molecule login -s {{ molecule_scenario }}"
-      workingDir: "{{ molecule_working_dir }}"
+      commandLine: "source $HOME/.bashrc && molecule login -s $MOLECULE_SCENARIO"
+      workingDir: "$SECONDARY_SOURCE/extensions"
       group:
         kind: debug
         isDefault: true
@@ -130,7 +130,7 @@ commands:
   - id: project-summary
     exec:
       label: "Project 01: View Project Variables"
-      commandLine: "ansible-playbook {{ project_source }}/playbooks/view_project.yml"
+      commandLine: "source $HOME/.bashrc && ansible-playbook {{ project_source }}/playbooks/view_project.yml"
       group:
         kind: run
         isDefault: false
@@ -139,7 +139,7 @@ commands:
   - id: project-retarget
     exec:
       label: "Project 02: Retarget Project"
-      commandLine: "ansible-playbook {{ project_source }}/playbooks/retarget_project.yml"
+      commandLine: "source $HOME/.bashrc && ansible-playbook {{ project_source }}/playbooks/retarget_project.yml"
       group:
         kind: run
         isDefault: false
