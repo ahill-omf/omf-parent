@@ -20,12 +20,12 @@ projects:
         origin: "https://github.com/ahill-omf/ansible-devspaces-poc.git"
 variables:
   # ENV Variable for the core repository. This shouldn't be changed.
-  project_source: ${PROJECT_SOURCE}
+  project_source: $PROJECT_SOURCE
   # ENV Variable for a secondary repository. This is transient and can be changed by the user. For instance, this needs
   # updating to correctly target molecule invocations
-  secondary_source: ${SECONDARY_SOURCE}
-  molecule_working_dir: ${SECONDARY_SOURCE}/extensions
-  molecule_scenario: ${MOLECULE_SCENARIO}
+  secondary_source: $SECONDARY_SOURCE
+  molecule_working_dir: $SECONDARY_SOURCE/extensions
+  molecule_scenario: $MOLECULE_SCENARIO
 commands:
   - id: oc-install
     exec:
