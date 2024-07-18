@@ -1,4 +1,8 @@
 ---
-# For testing playbooks, call the file with import_playbook
-- name: Converge
-  import_playbook: ../../playbooks/my_first_playbook.yml
+# This is an example of how converge should be structure when testing playbooks
+- name: Create
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    - ansible.builtin.import_tasks: "{{ lookup('ansible.builtin.env', 'SECONDARY_SOURCE') }}/playbooks/disk_space_tasks.yml"

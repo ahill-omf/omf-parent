@@ -1,0 +1,8 @@
+---
+- name: Run df Command
+  ansible.builtin.command: df -h
+  register: df_results
+  changed_when: false
+- name: Print df Results
+  ansible.builtin.debug:
+    var: df_results
