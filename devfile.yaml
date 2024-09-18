@@ -44,7 +44,7 @@ commands:
   - id: molecule-init
     exec:
       label: "Molecule 01: generate a new molecule scenario"
-      commandLine: "/usr/local/bin/ansible-playbook {{ project_source }}/playbooks/molecule_init.yml"
+      commandLine: "source $HOME/.bashrc && /usr/local/bin/ansible-playbook {{ project_source }}/playbooks/molecule_init.yml"
       workingDir: "{{ project_source }}"
       group:
         kind: build
